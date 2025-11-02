@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { User } from '../types';
-import { connect, disconnect } from 'starknet';
 
 interface AuthState {
   user: User | null;
@@ -14,7 +13,7 @@ interface AuthState {
   clearError: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   walletAddress: null,
   isConnected: false,
@@ -36,7 +35,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         throw new Error('Failed to connect wallet');
       }
 
-      const [address] = await starknet.account.getAddresses();
+      const address = starknet.selectedAddress;
 
       set({
         walletAddress: address.toLowerCase(),
