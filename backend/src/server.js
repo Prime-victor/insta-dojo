@@ -9,7 +9,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 
 import { logger } from './utils/logger.js';
-import { redisClient } from './utils/redis.js';
+//import { redisClient } from './utils/redis.js';
 import { dojoClient } from './utils/dojo.js';
 import { FeedSocketHandler } from './sockets/feedSocket.js';
 
@@ -94,7 +94,7 @@ async function startServer() {
   try {
     await connectDatabase();
 
-    await redisClient.connect();
+    //await redisClient.connect();
 
     await dojoClient.initialize();
     logger.info('Dojo client initialized');
@@ -119,7 +119,7 @@ process.on('SIGTERM', async () => {
   logger.info('SIGTERM signal received: closing HTTP server');
   httpServer.close(async () => {
     await mongoose.connection.close();
-    await redisClient.disconnect();
+    //await redisClient.disconnect();
     logger.info('Server closed');
     process.exit(0);
   });
@@ -129,7 +129,7 @@ process.on('SIGINT', async () => {
   logger.info('SIGINT signal received: closing HTTP server');
   httpServer.close(async () => {
     await mongoose.connection.close();
-    await redisClient.disconnect();
+    //await redisClient.disconnect();
     logger.info('Server closed');
     process.exit(0);
   });
